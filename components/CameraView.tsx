@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as tmService from '../services/tmService';
 import ScannerOverlay from './ScannerOverlay';
+import DiseaseOverlay from './DiseaseOverlay';
 
 // Import Preset Image Data
 import { HEALTHY_BASE64 } from '../data/healthy';
@@ -46,13 +47,14 @@ const CameraView: React.FC = () => {
   
   // State
   const [isModelLoaded, setIsModelLoaded] = useState(false);
-  const [isSystemReady, setIsSystemReady] = useState(false); // New state for safety delay
+  const [isSystemReady, setIsSystemReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
   // Logic State
   const [activePreset, setActivePreset] = useState<string | null>(null);
   const [instruction, setInstruction] = useState<string>("");
-  const [scanState, setScanState] = useState<'SCANNING' | 'DETECTED' | 'HELP_VIEW'>('SCANNING');
+  // Added 'ANALYZING' state
+  const [scanState, setScanState] = useState<'SCANNING' | 'ANALYZING' | 'DETECTED' | 'HELP_VIEW'>('SCANNING');
   const [detectedClass, setDetectedClass] = useState<string>("");
 
   // Refs for timer logic and loop control
@@ -78,11 +80,9 @@ const CameraView: React.FC = () => {
     initModel();
   }, []);
 
-  // System Ready Delay (Fix for stuck state)
+  // System Ready Delay
   useEffect(() => {
       if (isModelLoaded) {
-          // Add a safety buffer (5 seconds) to ensure camera is hot and model is ready 
-          // before allowing preset selection to prevent race conditions.
           const timer = setTimeout(() => {
               setIsSystemReady(true);
           }, 5000);
@@ -101,7 +101,7 @@ const CameraView: React.FC = () => {
 
   // --- LIVE CAMERA LOOP ---
   const animate = useCallback(async () => {
-    if (!isScanningRef.current || activePreset) return; // Don't run loop if using preset
+    if (!isScanningRef.current || activePreset) return; // Don't run loop if using preset or analyzing
 
     if (videoRef.current && isModelLoaded && videoRef.current.readyState === 4) {
       const predictions = await tmService.predict(videoRef.current);
@@ -133,8 +133,8 @@ const CameraView: React.FC = () => {
             
             if (top.className === lastClassRef.current) {
                 const elapsed = Date.now() - startTimeRef.current;
-                if (elapsed > 3000) { // 3 Seconds hold for Camera
-                    confirmDetection(top.className);
+                if (elapsed > 2000) { // 2 Seconds hold for Camera
+                    processFinalResult(top.className);
                 }
             } else {
                 lastClassRef.current = top.className;
@@ -144,15 +144,33 @@ const CameraView: React.FC = () => {
       }
   };
 
-  const confirmDetection = (className: string) => {
+  // Centralized logic to handle the transition from detection to showing results
+  const processFinalResult = (className: string) => {
+      // Stop the scanning loop
       isScanningRef.current = false;
       setDetectedClass(className);
-      setScanState('DETECTED');
+
+      const isHealthyCheck = className.toLowerCase().includes('healthy');
+
+      if (isHealthyCheck) {
+          // If healthy, show immediately
+          setScanState('DETECTED');
+      } else {
+          // If disease, show "Fake" analyzing effect
+          setScanState('ANALYZING');
+          setInstruction("Isolating Symptoms...");
+          
+          // Wait 2 seconds with the overlay before showing result
+          setTimeout(() => {
+              setInstruction("");
+              setScanState('DETECTED');
+          }, 2500);
+      }
   };
 
   // --- PRESET LOGIC ---
   const handlePresetSelect = (url: string) => {
-      if (!isSystemReady) return; // Prevent clicking before ready
+      if (!isSystemReady) return; 
 
       // 1. Reset state
       setScanState('SCANNING');
@@ -165,17 +183,14 @@ const CameraView: React.FC = () => {
           if (imageRef.current && isModelLoaded) {
               const predictions = await tmService.predict(imageRef.current);
               
-              // Sort to find top
               const sorted = [...predictions].sort((a, b) => b.probability - a.probability);
               const top = sorted[0];
 
-              // For presets, we force a result even if confidence is slightly lower, 
-              // but usually presets are high quality.
               if (top) {
-                  confirmDetection(top.className);
+                  processFinalResult(top.className);
               }
           }
-      }, 1500); // 1.5s simulated scan
+      }, 1000); 
   };
 
   // Start Loop Trigger (Only for Camera)
@@ -206,7 +221,6 @@ const CameraView: React.FC = () => {
           };
         }
       } catch (err) {
-        // If camera fails, we just don't show video. Presets still work.
         console.warn("Camera access denied or failed", err);
       }
     };
@@ -251,10 +265,26 @@ const CameraView: React.FC = () => {
               />
           )}
           
-          {/* Overlay (Shared) */}
+          {/* Standard Overlay (Brackets, etc) */}
           {scanState === 'SCANNING' && (
               <ScannerOverlay instruction={instruction} />
           )}
+
+          {/* Disease Analyzing Overlay (Fake red spots) */}
+          {scanState === 'ANALYZING' && (
+              <>
+                <DiseaseOverlay />
+                {/* Analyzing Text */}
+                <div className="absolute bottom-10 inset-x-0 flex justify-center z-30">
+                    <div className="bg-slate-900/80 px-6 py-2 rounded-full border border-red-500/50 backdrop-blur-sm animate-pulse">
+                        <span className="text-red-400 font-mono text-sm tracking-widest font-bold uppercase">
+                            ⚠️ Isolating Symptoms...
+                        </span>
+                    </div>
+                </div>
+              </>
+          )}
+
         </div>
       ) : (
           <div className="flex flex-col items-center justify-center h-64">
@@ -265,7 +295,7 @@ const CameraView: React.FC = () => {
 
 
       {/* --- PRESETS SELECTION SECTION --- */}
-      {/* Only show when scanning and no active result popup */}
+      {/* Hide during analyzing/results */}
       {scanState === 'SCANNING' && (
           <div className="mt-8 w-full animate-slide-up min-h-[120px]">
               <div className="text-center mb-4">
