@@ -1,4 +1,4 @@
-# 🌿 AI Object Scanner MVP
+#  AI Object Scanner MVP
 
 A blazing fast, real-time AI scanner built for the web. This MVP leverages **TensorFlow.js** and a custom **Teachable Machine** model to identify objects directly in the browser—no backend required.
 
@@ -7,7 +7,7 @@ A blazing fast, real-time AI scanner built for the web. This MVP leverages **Ten
 
 > **Note:** This project is currently configured as a prototype (e.g., tomato plant disease detection), but the logic can be easily adapted for any image classification task.
 
-## ✨ Features
+## Features
 
 - **Real-time Classification**: Instant feedback using WebGL-accelerated inference.
 - **Smart Scanning Logic**: Includes confidence thresholds and stability timers (scan for 3s) to prevent flickering results.
@@ -75,7 +75,7 @@ export const TM_MODEL_URL = 'https://teachablemachine.withgoogle.com/models/YOUR
 ```
 
 
-## 💻 Tech Stack
+## Tech Stack
 
 - **Framework**: React 18 + Vite
 - **Language**: TypeScript
@@ -83,6 +83,6 @@ export const TM_MODEL_URL = 'https://teachablemachine.withgoogle.com/models/YOUR
 - **ML Engine**: TensorFlow.js
 - **Model Loader**: @teachablemachine/image
 
-## 📄 License
+## License
 
 MIT License. Free to use for educational and prototype purposes.
