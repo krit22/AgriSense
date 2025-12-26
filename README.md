@@ -1,4 +1,4 @@
-#  AI Object Scanner MVP
+# 🌿 AI Object Scanner MVP
 
 A blazing fast, real-time AI scanner built for the web. This MVP leverages **TensorFlow.js** and a custom **Teachable Machine** model to identify objects directly in the browser—no backend required.
 
@@ -7,7 +7,7 @@ A blazing fast, real-time AI scanner built for the web. This MVP leverages **Ten
 
 > **Note:** This project is currently configured as a prototype (e.g., tomato plant disease detection), but the logic can be easily adapted for any image classification task.
 
-## Features
+## ✨ Features
 
 - **Real-time Classification**: Instant feedback using WebGL-accelerated inference.
 - **Smart Scanning Logic**: Includes confidence thresholds and stability timers (scan for 3s) to prevent flickering results.
@@ -17,10 +17,11 @@ A blazing fast, real-time AI scanner built for the web. This MVP leverages **Ten
 
 ## 📸 Screenshots
 
-<img width="581" height="681" alt="image" src="https://github.com/user-attachments/assets/5b7d256c-a592-4d84-b485-1825c4323b39" />
-<img width="777" height="322" alt="image" src="https://github.com/user-attachments/assets/686a8e11-0853-475c-9267-cedd342c166e" />
-<img width="478" height="550" alt="image" src="https://github.com/user-attachments/assets/eb7eeccd-808c-463f-9f80-a75faf497ae8" />
-  
+<!-- Upload screenshots to your repo or an image host and link them here -->
+
+| Scanning Mode | Detection Result | Action Plan |
+|:---:|:---:|:---:|
+| *(Place screenshot of scanning overlay here)* | *(Place screenshot of healthy/detected result here)* | *(Place screenshot of help/details view here)* |
 
 ## 🚀 How It Works
 
@@ -74,8 +75,12 @@ To use your own model trained on [Teachable Machine](https://teachablemachine.wi
 export const TM_MODEL_URL = 'https://teachablemachine.withgoogle.com/models/YOUR_NEW_MODEL_ID/';
 ```
 
+### Customizing Advice
 
-## Tech Stack
+Currently, the advice (Action Plan) is hardcoded for the MVP demonstration.
+To change the text, edit the `HARDCODED_SOLUTION` object in `components/CameraView.tsx`.
+
+## 💻 Tech Stack
 
 - **Framework**: React 18 + Vite
 - **Language**: TypeScript
@@ -83,6 +88,6 @@ export const TM_MODEL_URL = 'https://teachablemachine.withgoogle.com/models/YOUR
 - **ML Engine**: TensorFlow.js
 - **Model Loader**: @teachablemachine/image
 
-## License
+## 📄 License
 
 MIT License. Free to use for educational and prototype purposes.
