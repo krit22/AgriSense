@@ -1,4 +1,4 @@
-# 🌿 AI Object Scanner MVP
+<img width="581" height="681" alt="image" src="https://github.com/user-attachments/assets/9076daab-39c9-482b-853a-7d87d6019c04" /># 🌿 AI Object Scanner MVP
 
 A blazing fast, real-time AI scanner built for the web. This MVP leverages **TensorFlow.js** and a custom **Teachable Machine** model to identify objects directly in the browser—no backend required.
 
@@ -21,7 +21,8 @@ A blazing fast, real-time AI scanner built for the web. This MVP leverages **Ten
 
 | Scanning Mode | Detection Result | Action Plan |
 |:---:|:---:|:---:|
-| *(Place screenshot of scanning overlay here)* | *(Place screenshot of healthy/detected result here)* | *(Place screenshot of help/details view here)* |
+| *<img width="581" height="681" alt="image" src="https://github.com/user-attachments/assets/5b7d256c-a592-4d84-b485-1825c4323b39" />
+* | *(Place screenshot of healthy/detected result here)* | *(Place screenshot of help/details view here)* |
 
 ## 🚀 How It Works
 
