@@ -74,10 +74,6 @@ To use your own model trained on [Teachable Machine](https://teachablemachine.wi
 export const TM_MODEL_URL = 'https://teachablemachine.withgoogle.com/models/YOUR_NEW_MODEL_ID/';
 ```
 
-### Customizing Advice
-
-Currently, the advice (Action Plan) is hardcoded for the MVP demonstration.
-To change the text, edit the `HARDCODED_SOLUTION` object in `components/CameraView.tsx`.
 
 ## 💻 Tech Stack
 
