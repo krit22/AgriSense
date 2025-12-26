@@ -22,7 +22,9 @@ A blazing fast, real-time AI scanner built for the web. This MVP leverages **Ten
 | Scanning Mode | Detection Result | Action Plan |
 |:---:|:---:|:---:|
 | *<img width="581" height="681" alt="image" src="https://github.com/user-attachments/assets/5b7d256c-a592-4d84-b485-1825c4323b39" />
-* | *(Place screenshot of healthy/detected result here)* | *(Place screenshot of help/details view here)* |
+* | *<img width="777" height="322" alt="image" src="https://github.com/user-attachments/assets/686a8e11-0853-475c-9267-cedd342c166e" />
+* | *<img width="478" height="550" alt="image" src="https://github.com/user-attachments/assets/eb7eeccd-808c-463f-9f80-a75faf497ae8" />
+* |
 
 ## 🚀 How It Works
 
