@@ -1,0 +1,7 @@
+{
+  "name": "TM Scanner MVP",
+  "description": "A real-time AI scanner using a Teachable Machine model to classify video streams.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
