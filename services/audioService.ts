@@ -1,5 +1,4 @@
 // Simple browser-based TTS for low latency in the hackathon MVP
-// In production, we could swap this for Gemini Audio generation
 
 export const speak = (text: string, priority: 'gentle' | 'urgent' = 'gentle') => {
   if (!window.speechSynthesis) return;
