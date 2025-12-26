@@ -31,10 +31,11 @@ export const loadModel = async (): Promise<boolean> => {
   }
 };
 
-export const predict = async (videoElement: HTMLVideoElement | HTMLCanvasElement): Promise<Prediction[]> => {
-  if (!model || !videoElement) return [];
+// Fix: Allow HTMLImageElement in predict function
+export const predict = async (input: HTMLVideoElement | HTMLCanvasElement | HTMLImageElement): Promise<Prediction[]> => {
+  if (!model || !input) return [];
 
-  const prediction = await model.predict(videoElement);
+  const prediction = await model.predict(input);
   return prediction;
 };
 

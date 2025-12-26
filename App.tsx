@@ -10,10 +10,10 @@ const App: React.FC = () => {
            <span className="text-xs text-slate-300 font-medium tracking-wide">SYSTEM ACTIVE</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 mb-2">
-          Object Scanner
+          Tomato Blight Detector
         </h1>
         <p className="text-slate-400 max-w-md mx-auto text-sm md:text-base">
-          Point your camera at the object to classify it in real-time.
+          Point your camera towards a tomato leaf to scan and get results.
         </p>
       </header>
 
