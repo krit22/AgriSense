@@ -3,12 +3,13 @@ import React, { useMemo } from 'react';
 const DiseaseOverlay: React.FC = () => {
   // Generate random detection points concentrated towards the center (likely where leaf is)
   const spots = useMemo(() => {
-    const count = Math.floor(Math.random() * 3) + 3; // 3 to 5 spots
+    // Increased count for denser scanning effect
+    const count = Math.floor(Math.random() * 6) + 5; // 5 to 10 spots
     return Array.from({ length: count }).map((_, i) => ({
       id: i,
-      top: 20 + Math.random() * 60, // Keep within 20-80% height to avoid edges
-      left: 20 + Math.random() * 60, // Keep within 20-80% width
-      size: 40 + Math.random() * 40,  // Random size
+      top: 15 + Math.random() * 70, // Slightly expanded range (15-85%)
+      left: 15 + Math.random() * 70, // Slightly expanded range (15-85%)
+      size: 30 + Math.random() * 50,  // Random size
       delay: Math.random() * 0.5,     // Random animation delay
     }));
   }, []);
